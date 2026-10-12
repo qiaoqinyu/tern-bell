@@ -1,0 +1,10 @@
+local catalog = require("./catalog")
+local audio = require("./audio")
+tern.on("agent_finished", function(ev, cx)
+    local cfg = catalog.load()
+    if not cfg.enabled or (ev.result ~= "done" and ev.result ~= "failed") then return end
+    audio.play("notification-" .. tostring(ev.pane), if ev.result == "done" then cfg.sound else "Basso", cfg.volume, function(err) tern.log.error(err) end)
+end)
+tern.command({ id = "settings", title = "Bell: Settings", run = function(cx)
+    cx:new_block("bell.settings", {}, "tab")
+end })
