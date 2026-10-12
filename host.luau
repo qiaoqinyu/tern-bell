@@ -37,7 +37,7 @@ tern.block.define("settings", {
     view = function(s, cx)
         local rows = {}
         for i, name in catalog.sounds do
-            table.insert(rows, ui.node("item", { key = tostring(i), label = name, detail = if string.sub(name, 1, 5) == "CS16_" then "CS 1.6" else "macOS" }))
+            table.insert(rows, ui.node("item", { key = tostring(i), label = name, detail = if catalog.custom[name] then "custom" else "macOS" }))
         end
         local function button(text, act)
             return ui.el("button", { text = text, actions = { click = act } })

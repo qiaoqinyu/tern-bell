@@ -25,15 +25,15 @@ tern plugin install github.com/qiaoqinyu/tern-bell
 
 Update with `tern plugin install github.com/qiaoqinyu/tern-bell --force`.
 
-## Optional CS 1.6 clips
+## Optional custom sounds
 
-The repository ships no CS 1.6 audio (redistribution rights are unclear). If you own the clips, drop `.wav` files into:
+The repository ships no audio assets. To add your own (any format `afplay` plays: `.wav`, `.aiff`, `.mp3`, `.m4a`, `.caf`), drop files into:
 
 ```
-<plugin-data>/bell/sounds/cs16/*.wav
+<plugin-data>/bell/sounds/custom/
 ```
 
-Find the folder via the plugin's data directory (`~/Library/Application Support/Tern/plugin-data/bell/sounds/cs16` by default). Each file appears as `CS16_<name>` in the settings list on the next reload. A typical set: terwin, sticktog, roger, negative, locknload, letsgo, enemydown, ctwin, ct_fireinhole, ct_affirm, bombpl, bombdef.
+Find the folder via the plugin's data directory (`~/Library/Application Support/Tern/plugin-data/bell/sounds/custom` by default). Each file appears in the settings list by its name without extension, after the built-ins, on the next reload. For example, `roger.wav` shows as `roger`.
 
 ## Notes
 

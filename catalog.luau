@@ -1,18 +1,23 @@
-local M = { sounds = {}, paths = {} }
+local M = { sounds = {}, paths = {}, custom = {} }
 for _, name in { "Basso", "Blow", "Bottle", "Frog", "Funk", "Glass", "Hero", "Morse", "Ping", "Pop", "Purr", "Sosumi", "Submarine", "Tink" } do
     table.insert(M.sounds, name)
     M.paths[name] = "/System/Library/Sounds/" .. name .. ".aiff"
 end
--- CS 1.6 clips are user-supplied: the package ships none. Drop `.wav`
--- files into <plugin-data>/bell/sounds/cs16/ and they appear here.
-local clips = if tern.fs.exists(tern.plugin.data .. "/sounds/cs16") then tern.fs.list(tern.plugin.data .. "/sounds/cs16") else {}
-table.sort(clips)
-for _, file in clips do
-    local clip = string.match(file, "^(.-)%.wav$")
-    if clip and #clip > 0 then
-        local name = "CS16_" .. clip
-        table.insert(M.sounds, name)
-        M.paths[name] = tern.plugin.data .. "/sounds/cs16/" .. file
+-- Custom sounds are user-supplied: the package ships none. Drop audio
+-- files (.wav .aiff .mp3 .m4a .caf) into <plugin-data>/bell/sounds/custom/
+-- and they appear in the list by file name, after the built-ins.
+local custom = tern.plugin.data .. "/sounds/custom"
+if tern.fs.exists(custom) then
+    local playable = { wav = true, aiff = true, mp3 = true, m4a = true, caf = true }
+    local files = tern.fs.list(custom)
+    table.sort(files)
+    for _, file in files do
+        local stem, ext = string.match(file, "^(.-)%.(%w+)$")
+        if stem and #stem > 0 and playable[ext:lower()] then
+            if not M.paths[stem] then table.insert(M.sounds, stem) end
+            M.paths[stem] = custom .. "/" .. file
+            M.custom[stem] = true
+        end
     end
 end
 function M.load()
