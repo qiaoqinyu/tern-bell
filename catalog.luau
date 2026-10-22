@@ -25,6 +25,11 @@ function M.load()
     if type(cfg) ~= "table" then
         cfg = { enabled = tern.kv.get("enabled") ~= false, sound = tern.kv.get("sound"), volume = tern.kv.get("volume") }
     end
-    return { enabled = cfg.enabled ~= false, sound = if cfg.sound and M.paths[cfg.sound] then cfg.sound else "Glass", volume = if type(cfg.volume) == "number" then math.clamp(cfg.volume, 0, 100) else 50 }
+    return {
+        enabled = cfg.enabled ~= false,
+        sound = if type(cfg.sound) == "string" and cfg.sound ~= "" then cfg.sound else "Glass",
+        failureSound = if type(cfg.failureSound) == "string" and cfg.failureSound ~= "" then cfg.failureSound else "Basso",
+        volume = if type(cfg.volume) == "number" then math.clamp(cfg.volume, 0, 100) else 50,
+    }
 end
 return M

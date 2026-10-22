@@ -1,8 +1,8 @@
 schema = 1
 id = "bell"
 name = "Bell"
-version = "1.1.0"
-description = "Completion bells for agent turns: preview sounds in a transactional settings pane, ring on done, Basso on failure. macOS."
+version = "1.2.1"
+description = "Main-agent completion, failure and input reminders with configurable local sounds and transactional settings. macOS."
 window = "window.luau"
 host = "host.luau"
 
